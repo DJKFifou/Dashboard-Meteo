@@ -12,25 +12,73 @@ async function currentWeather(query) {
   const data = await response.json();
 
   console.log(data);
-  document.querySelector(
-    "iframe"
-  ).src = `https://maps.google.com/maps?q=${data.coord.lat},${data.coord.lon}&hl=fr&z=12&output=embed`;
 
-  document.querySelector(".query").textContent = data.name;
+  const rightContent = document.querySelector(".right-content");
+  const error = document.querySelector(".error");
 
-  document.querySelector(
-    ".informations-icon"
-  ).src = `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+  if (data.cod === "404") {
+    rightContent.style.display = "none";
+    error.innerHTML = " /!\\ Ville non trouvée /!\\ ";
+    document.querySelector(
+      "iframe"
+    ).src = `https://maps.google.com/maps?hl=fr&z=12&output=embed`;
+    return;
+  } else {
+    rightContent.style.display = "flex";
+    error.innerHTML = "";
+    document.querySelector(
+      "iframe"
+    ).src = `https://maps.google.com/maps?q=${data.coord.lat},${data.coord.lon}&hl=fr&z=12&output=embed`;
 
-  document.querySelector(".temp").textContent =
-    Math.round(data.main.temp) + " °C";
+    document.querySelector(".query").textContent = data.name;
 
-  document.querySelector(".type").textContent = data.weather[0].main;
+    document.querySelector(
+      ".informations-icon"
+    ).src = `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
 
-  document.querySelector(".humidity").textContent = data.main.humidity + " %";
+    document.querySelector(".temp").textContent =
+      Math.round(data.main.temp) + " °C";
 
-  document.querySelector(".wind").textContent =
-    Math.round(data.wind.speed) + " km/h";
+    const type = document.querySelector(".type");
+    const weather = data.weather[0].main;
+
+    if (weather === "Clouds") {
+      type.textContent = "Nuages";
+    } else if (weather === "Clear") {
+      type.textContent = "Dégagé";
+    } else if (weather === "Rain") {
+      type.textContent = "Pluie";
+    } else if (weather === "Snow") {
+      type.textContent = "Neige";
+    } else if (weather === "Mist") {
+      type.textContent = "Brouillard";
+    } else if (weather === "Drizzle") {
+      type.textContent = "Bruine";
+    } else if (weather === "Thunderstorm") {
+      type.textContent = "Orage";
+    } else if (weather === "Haze") {
+      type.textContent = "Brume";
+    } else if (weather === "Fog") {
+      type.textContent = "Brouillard";
+    } else if (weather === "Smoke") {
+      type.textContent = "Fumée";
+    } else if (weather === "Dust") {
+      type.textContent = "Poussière";
+    } else if (weather === "Sand") {
+      type.textContent = "Sable";
+    } else if (weather === "Ash") {
+      type.textContent = "Cendres";
+    } else if (weather === "Squall") {
+      type.textContent = "Rafale";
+    } else if (weather === "Tornado") {
+      type.textContent = "Tornade";
+    }
+
+    document.querySelector(".humidity").textContent = data.main.humidity + " %";
+
+    document.querySelector(".wind").textContent =
+      Math.round(data.wind.speed) + " km/h";
+  }
 }
 
 async function dailyWeather(query) {
@@ -62,53 +110,38 @@ async function dailyWeather(query) {
 
     const detailsContainer = document.createElement("div");
     detailsContainer.className = `hours-details`;
+    const temp = document.querySelector(".temp");
 
     const tempElem = document.createElement("h4");
     tempElem.className = `hours-temp`;
     tempElem.textContent = Math.round(data.list[i].main.temp) + " °C";
     if (data.list[i].main.temp < 0) {
       tempElem.style.color = "blue";
+      temp.style.color = "blue";
     } else if (data.list[i].main.temp > 0 && data.list[i].main.temp < 10) {
       tempElem.style.color = "green";
+      temp.style.color = "green";
     } else if (data.list[i].main.temp > 10 && data.list[i].main.temp < 20) {
       tempElem.style.color = "yellow";
+      temp.style.color = "yellow";
     } else if (data.list[i].main.temp > 20 && data.list[i].main.temp < 30) {
       tempElem.style.color = "orange";
+      temp.style.color = "orange";
     } else {
       tempElem.style.color = "red";
+      temp.style.color = "red";
     }
     detailsContainer.appendChild(tempElem);
+
+    const humidityElem = document.createElement("h4");
+    humidityElem.className = `hours-humidity`;
+    humidityElem.textContent = data.list[i].main.humidity + " %";
+    detailsContainer.appendChild(humidityElem);
 
     const windElem = document.createElement("h4");
     windElem.className = `hours-wind`;
     windElem.textContent = Math.round(data.list[i].wind.speed) + " km/h";
     detailsContainer.appendChild(windElem);
-
-    const humidityElem = document.createElement("h4");
-    humidityElem.className = `hours-humidity`;
-    humidityElem.textContent = data.list[i].main.humidity + " %";
-    humidityElem.style.color = "blue";
-    detailsContainer.appendChild(humidityElem);
-    if (data.list[i].main.humidity < 0) {
-      humidityElem.style.opacity = "0.2";
-    } else if (
-      data.list[i].main.humidity > 0 &&
-      data.list[i].main.humidity < 10
-    ) {
-      humidityElem.style.color = "0.4";
-    } else if (
-      data.list[i].main.humidity > 10 &&
-      data.list[i].main.humidity < 20
-    ) {
-      humidityElem.style.color = "0.6";
-    } else if (
-      data.list[i].main.humidity > 20 &&
-      data.list[i].main.humidity < 30
-    ) {
-      humidityElem.style.color = "0.8";
-    } else {
-      humidityElem.style.color = "1";
-    }
 
     dayContainer.appendChild(detailsContainer);
 
@@ -116,10 +149,21 @@ async function dailyWeather(query) {
   }
 }
 
+input.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    currentWeather(input.value);
+    dailyWeather(input.value);
+    window.localStorage.setItem("city", input.value);
+  }
+});
+
 search.addEventListener("click", () => {
   currentWeather(input.value);
   dailyWeather(input.value);
+  window.localStorage.setItem("city", input.value);
 });
 
-currentWeather("Paris");
-dailyWeather("Paris");
+let city = window.localStorage.getItem("city");
+
+currentWeather(city ? city : "Paris");
+dailyWeather(city ? city : "Paris");

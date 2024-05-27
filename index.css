@@ -2,7 +2,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   color: white;
 }
 
@@ -21,6 +21,7 @@ input {
 }
 
 .container {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
@@ -30,6 +31,16 @@ input {
   border: 1px solid black;
   border-radius: 12px;
   background-color: #2c2c2c;
+}
+
+.error {
+  position: absolute;
+  top: -3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: black;
 }
 
 .left-content {
@@ -80,6 +91,7 @@ iframe {
 
 .query {
   text-align: center;
+  font-size: 1.75rem;
 }
 
 .container-informations {
@@ -92,6 +104,10 @@ iframe {
 .informations {
   display: flex;
   gap: 2rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  height: 100%;
+  white-space: nowrap;
 }
 
 .info-content {
@@ -105,6 +121,23 @@ iframe {
 .wind-content {
   display: flex;
   gap: 1rem;
+  height: 100%;
+}
+
+.temp,
+.humidity,
+.wind {
+  display: flex;
+  align-items: center;
+}
+
+.humidity,
+.hours-humidity {
+  color: #52b6ff;
+}
+
+.weather-icon {
+  width: 20%;
 }
 
 .daily-container {
@@ -124,7 +157,7 @@ iframe {
 }
 
 .hours {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 600;
 }
 
@@ -140,8 +173,29 @@ iframe {
   font-weight: 500;
 }
 
-.hours_type_icon {
+@media (max-width: 1000px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
-.detailsContainer {
+@media (max-width: 650px) {
+  .daily-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .informations {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .daily-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .container-informations {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
