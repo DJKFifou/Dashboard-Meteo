@@ -1,0 +1,147 @@
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+input {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 1000px;
+  height: fit-content;
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 12px;
+  background-color: #2c2c2c;
+}
+
+.left-content {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.query-input {
+  width: 100%;
+  height: 20px;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.search-input {
+  position: absolute;
+  right: 0;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+iframe {
+  width: 100%;
+  height: 300px;
+  border-radius: 8px;
+}
+
+.right-content {
+  grid-column-start: 2;
+  grid-column-end: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.query {
+  text-align: center;
+}
+
+.container-informations {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.informations {
+  display: flex;
+  gap: 2rem;
+}
+
+.info-content {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.temp-content,
+.humidity-content,
+.wind-content {
+  display: flex;
+  gap: 1rem;
+}
+
+.daily-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: #181818;
+  border-radius: 8px;
+}
+
+.hours {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.hours-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: calc(100% - 1rem);
+  padding: 0.5rem;
+  background-color: #2c2c2c;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.hours_type_icon {
+}
+
+.detailsContainer {
+}
