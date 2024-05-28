@@ -11,8 +11,6 @@ async function currentWeather(query) {
   const response = await fetch(urlCurrent + query + `&appid=${access_key}`);
   const data = await response.json();
 
-  console.log(data);
-
   const rightContent = document.querySelector(".right-content");
   const error = document.querySelector(".error");
 
@@ -84,8 +82,6 @@ async function currentWeather(query) {
 async function dailyWeather(query) {
   const response = await fetch(urlDaily + query + `&appid=${access_key}`);
   const data = await response.json();
-
-  console.log(data);
 
   const dailyContainer = document.querySelector(".daily-container");
   dailyContainer.innerHTML = "";
