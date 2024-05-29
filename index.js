@@ -40,36 +40,26 @@ async function currentWeather(query) {
     const type = document.querySelector(".type");
     const weather = data.weather[0].main;
 
-    if (weather === "Clouds") {
-      type.textContent = "Nuages";
-    } else if (weather === "Clear") {
-      type.textContent = "Dégagé";
-    } else if (weather === "Rain") {
-      type.textContent = "Pluie";
-    } else if (weather === "Snow") {
-      type.textContent = "Neige";
-    } else if (weather === "Mist") {
-      type.textContent = "Brouillard";
-    } else if (weather === "Drizzle") {
-      type.textContent = "Bruine";
-    } else if (weather === "Thunderstorm") {
-      type.textContent = "Orage";
-    } else if (weather === "Haze") {
-      type.textContent = "Brume";
-    } else if (weather === "Fog") {
-      type.textContent = "Brouillard";
-    } else if (weather === "Smoke") {
-      type.textContent = "Fumée";
-    } else if (weather === "Dust") {
-      type.textContent = "Poussière";
-    } else if (weather === "Sand") {
-      type.textContent = "Sable";
-    } else if (weather === "Ash") {
-      type.textContent = "Cendres";
-    } else if (weather === "Squall") {
-      type.textContent = "Rafale";
-    } else if (weather === "Tornado") {
-      type.textContent = "Tornade";
+    const weatherDescriptions = {
+      Clouds: "Nuages",
+      Clear: "Dégagé",
+      Rain: "Pluie",
+      Snow: "Neige",
+      Mist: "Brouillard",
+      Drizzle: "Bruine",
+      Thunderstorm: "Orage",
+      Haze: "Brume",
+      Fog: "Brouillard",
+      Smoke: "Fumée",
+      Dust: "Poussière",
+      Sand: "Sable",
+      Ash: "Cendres",
+      Squall: "Rafale",
+      Tornado: "Tornade",
+    };
+
+    if (weatherDescriptions.hasOwnProperty(weather)) {
+      type.textContent = weatherDescriptions[weather];
     }
 
     document.querySelector(".humidity").textContent = data.main.humidity + " %";
@@ -111,16 +101,16 @@ async function dailyWeather(query) {
     const tempElem = document.createElement("h4");
     tempElem.className = `hours-temp`;
     tempElem.textContent = Math.round(data.list[i].main.temp) + " °C";
-    if (data.list[i].main.temp < 0) {
+    if (data.list[i].main.temp <= 0) {
       tempElem.style.color = "blue";
       temp.style.color = "blue";
-    } else if (data.list[i].main.temp > 0 && data.list[i].main.temp < 10) {
+    } else if (data.list[i].main.temp > 0 && data.list[i].main.temp <= 10) {
       tempElem.style.color = "green";
       temp.style.color = "green";
-    } else if (data.list[i].main.temp > 10 && data.list[i].main.temp < 20) {
+    } else if (data.list[i].main.temp >= 10 && data.list[i].main.temp < 20) {
       tempElem.style.color = "yellow";
       temp.style.color = "yellow";
-    } else if (data.list[i].main.temp > 20 && data.list[i].main.temp < 30) {
+    } else if (data.list[i].main.temp >= 20 && data.list[i].main.temp < 30) {
       tempElem.style.color = "orange";
       temp.style.color = "orange";
     } else {
